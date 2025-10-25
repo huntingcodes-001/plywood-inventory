@@ -3,7 +3,8 @@ Database connection and utilities for Supabase PostgreSQL.
 Handles Supabase client initialization and connection management.
 """
 
-from supabase import create_client, Client
+# FIX: Changed import path to avoid conflicting internal imports from the 'realtime' package.
+from supabase.client import create_client, Client 
 from .config import settings
 import logging
 from typing import Optional, Dict, Any
@@ -70,8 +71,8 @@ class DatabaseManager:
             bool: True if connection is healthy, False otherwise
         """
         try:
-            # Test connection with a simple query that should always work
-            result = self._client.rpc('version').execute()
+            # FIX: Added params={} to satisfy new library requirements
+            result = self._client.rpc('version', params={}).execute()
             return result is not None
         except Exception as e:
             logger.error(f"Sync health check failed: {e}")
@@ -98,7 +99,8 @@ class DatabaseManager:
                 return health_status
                 
             # Test basic connection
-            result = self._client.rpc('version').execute()
+            # FIX: Added params={} to satisfy new library requirements
+            result = self._client.rpc('version', params={}).execute()
             
             if result:
                 health_status["healthy"] = True

@@ -30,8 +30,10 @@ class UserRegister(BaseModel):
     first_name: str = Field(..., min_length=1, max_length=100)
     last_name: str = Field(..., min_length=1, max_length=100)
     email: EmailStr
-    phone_number: str = Field(..., regex=r'^\d{10,14}$')
-    emergency_contact_number: str = Field(..., regex=r'^\d{10,14}$')
+    # FIX: Changed 'regex' to 'pattern' for Pydantic V2 compatibility
+    phone_number: str = Field(..., pattern=r'^\d{10,14}$')
+    # FIX: Changed 'regex' to 'pattern' for Pydantic V2 compatibility
+    emergency_contact_number: str = Field(..., pattern=r'^\d{10,14}$')
     password: str = Field(..., min_length=8)
 
     @validator('password')

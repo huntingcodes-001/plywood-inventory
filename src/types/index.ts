@@ -9,8 +9,9 @@ export interface User {
   emergencyContact: string;
   role: UserRole;
   status: 'invited' | 'active';
+  // ADDED: Token for authenticated requests
+  token?: string; 
 }
-
 export interface InventoryItem {
   id: string;
   productId: string;
